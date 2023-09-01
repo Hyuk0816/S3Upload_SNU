@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>S3 파일 업로드</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<h1>S3 파일 업로드</h1>
+<form id="upload-form" action="/api/s3/upload" method="POST" enctype="multipart/form-data">
+    <label for="file-input">파일 선택:</label>
+    <input type="file" id="file-input" name="file" accept=".csv">
+    <button type="submit">파일 업로드</button>
+</form>
+<div id="status"></div>
+
+<script src="static/script.js"></script>
+</body>
+</html>

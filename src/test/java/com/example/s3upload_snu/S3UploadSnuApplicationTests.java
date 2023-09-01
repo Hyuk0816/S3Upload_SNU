@@ -1,0 +1,13 @@
+package com.example.s3upload_snu;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class S3UploadSnuApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
