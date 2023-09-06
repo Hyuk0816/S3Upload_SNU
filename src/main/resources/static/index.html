@@ -8,17 +8,22 @@
 </head>
 <body>
 <h1>서울대학교 캠퍼스타운 기업 출근 LOG 분석</h1>
-<div>파일 선택을 누르세요!</div>
+<h2>File Upload</h2>
+<div>파일 선택을 누르고 선택한 뒤, 파일 업로드 버튼을 누르세요!</div>
 <form id="upload-form" action="/api/s3/upload" method="POST" enctype="multipart/form-data">
     <label for="file-input">파일 선택:</label>
     <input type="file" id="file-input" name="file" accept=".csv">
-    <button type="submit">파일 업로드</button>
+    <div>
+        <button type="submit">파일 업로드</button>
+    </div>
+
 </form>
 <div id="status"></div>
 
 <!-- 여기서부터는 새로운 양식 추가 -->
 <hr>
-<h2>파일 다운로드</h2>
+<h2>File Download</h2>
+<div>업로드한 파일명을 .csv 까지 입력한 뒤 다운로드 버튼을 누르세요!</div>
 <form id="download-form">
     <label for="folder">폴더 선택:</label>
     <select id="folder" name="folder">

@@ -15,10 +15,10 @@ h1 {
 
 /* 업로드 및 다운로드 폼 스타일 */
 form {
-    margin-top: 30px;
+    margin-top: 20px;
     background-color: #fff; /* 폼 배경색 */
-    padding: 20px;
-    border-radius: 20px; /* 폼 테두리 둥글게 */
+    padding: 10px;
+    border-radius: 100px; /* 폼 테두리 둥글게 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
 }
 
@@ -30,6 +30,7 @@ input[type="file"] {
 /* 업로드 버튼 스타일 */
 button {
     background-color: #007bff;
+    margin-top: 20px;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -46,4 +47,17 @@ button:hover {
     margin-top: 20px;
     color: #007bff;
     font-weight: bold; /* 굵은 글꼴 */
+}
+
+#download-form label[type="text"]{
+    margin-top: 20px;
+}
+
+#download-form input[type = "text"],
+#download-form label[type = "filename"]{
+    margin-top: 20px;
+}
+
+#download-form button[type="submit"] {
+    margin-top: 20px; /* 버튼을 20px 아래로 이동 */
 }
