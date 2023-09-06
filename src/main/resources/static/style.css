@@ -48,16 +48,16 @@ button:hover {
     color: #007bff;
     font-weight: bold; /* 굵은 글꼴 */
 }
-
+/*다운로드 텍스트*/
 #download-form label[type="text"]{
     margin-top: 20px;
 }
-
+/*다운로드 버튼 텍스트*/
 #download-form input[type = "text"],
 #download-form label[type = "filename"]{
     margin-top: 20px;
 }
-
+/*제출 버튼*/
 #download-form button[type="submit"] {
     margin-top: 20px; /* 버튼을 20px 아래로 이동 */
 }
