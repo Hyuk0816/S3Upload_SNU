@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // AJAX 요청 보내기
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", form.action); // 서버 엔드포인트에 맞게 수정
+            xhr.open("POST", "/api/s3/upload"); // 서버 엔드포인트에 맞게 수정
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     statusDiv.textContent = "파일 업로드 완료!";
@@ -43,6 +43,32 @@ document.addEventListener("DOMContentLoaded", function () {
             statusDiv.textContent = `선택한 파일: ${selectedFile.name}`;
         } else {
             statusDiv.textContent = "파일을 선택하세요.";
+        }
+    });
+
+    // 파일 다운로드 양식 처리
+    const downloadForm = document.getElementById("download-form");
+
+    downloadForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // 선택한 폴더와 파일 이름 가져오기
+        const folderSelect = document.getElementById("folder");
+        const filenameInput = document.getElementById("filename");
+
+        const folder = folderSelect.value;
+        const filename = filenameInput.value;
+
+        if (folder && filename) {
+            // 파일 다운로드 링크 생성
+            const downloadLink = document.createElement("a");
+            downloadLink.href = `/api/s3/download/${folder}/${filename}`;
+            downloadLink.download = filename;
+
+            // 링크를 클릭하여 다운로드 시작
+            downloadLink.click();
+        } else {
+            alert("폴더와 파일 이름을 모두 입력하세요.");
         }
     });
 });
