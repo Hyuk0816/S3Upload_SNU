@@ -13,7 +13,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -47,7 +46,7 @@ public class S3Controller {
     @GetMapping("/download/{folder}/{filename}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable String folder, @PathVariable String filename) throws IOException {
         String bucketName = "down-snu"; // S3 버킷 이름
-        String key = folder + "/" + filename; // 동적으로 S3 키 생성
+        String key = folder + "/" + filename; // s3 폴더와 오브젝트를 동적으로 설정하여 필요한 거점별 데이터 다운
 
         S3Object s3Object = amazonS3.getObject(bucketName, key);
         InputStream inputStream = s3Object.getObjectContent();
