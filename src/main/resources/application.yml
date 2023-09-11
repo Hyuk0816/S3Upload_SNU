@@ -1,0 +1,18 @@
+cloud:
+  aws:
+    s3:
+      bucket: upload-snu
+    credentials:
+      access-key: access key
+      secret-key: secret key
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
