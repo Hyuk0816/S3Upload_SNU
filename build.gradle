@@ -43,6 +43,5 @@ tasks.named('test') {
 
 // heroku 배포를 위한 코드 작성
 jar {
-    archiveBaseName = 'S3Upload_SNU'
-    archiveVersion = '0.0.1'
+    enabled = false
 }
