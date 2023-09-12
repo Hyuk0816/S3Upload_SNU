@@ -40,3 +40,9 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// heroku 배포를 위한 코드 작성
+jar {
+    baseName = 'heroku-api'
+    version = '0.0.1'
+}
