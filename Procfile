@@ -1,0 +1,1 @@
+web: java $java_opts -jar app.jar
