@@ -1,1 +1,1 @@
-web: java $java_opts -jar app.jar
+web: java $java_opts -jar build/libs/S3Upload_SNU-0.0.1-SNAPSHOT.jar

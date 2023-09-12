@@ -46,15 +46,3 @@ jar {
     enabled = false
 }
 
-task stage(type: copy, dependson: [clean, build]) {
-    from jar.archivepath
-    into project.rootdir
-    rename {
-        'app.jar'
-    }
-}
-stage.mustrunafter(clean)
-
-clean << {
-    project.file('app.jar').delete()
-}
