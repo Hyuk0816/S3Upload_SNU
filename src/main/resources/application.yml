@@ -1,13 +1,15 @@
 cloud:
   aws:
     s3:
-      bucket: upload-snu
+      bucket:
+      - upload-snu
+      - down-snu
     credentials:
-      access-key: access key
-      secret-key: secret key
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
     region:
-      static: ap-northeast-2
-      auto: false
+      static: ${AWS_REGION}
+
     stack:
       auto: false
 logging:
@@ -16,3 +18,5 @@ logging:
       amazonaws:
         util:
           EC2MetadataUtils: error
+server:
+  port: 8080
