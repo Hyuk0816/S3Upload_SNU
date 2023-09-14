@@ -11,6 +11,7 @@ body {
 h1 {
     color: #007bff; /* 제목 텍스트 색상 */
     margin: 20px 0;
+    font-family: "휴먼모음T";
 }
 
 /* 업로드 및 다운로드 폼 스타일 */
@@ -18,13 +19,15 @@ form {
     margin-top: 20px;
     background-color: #fff; /* 폼 배경색 */
     padding: 10px;
-    border-radius: 100px; /* 폼 테두리 둥글게 */
+    border-radius: 10px; /* 폼 테두리 둥글게 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+
 }
 
 /* 파일 업로드 스타일 */
 input[type="file"] {
     display: none;
+
 }
 
 /* 업로드 버튼 스타일 */
@@ -36,6 +39,8 @@ button {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s; /* 배경색 변경 애니메이션 */
+    font-style: oblique;
+    border-radius: 30px;
 }
 
 button:hover {
@@ -60,4 +65,8 @@ button:hover {
 /*제출 버튼*/
 #download-form button[type="submit"] {
     margin-top: 20px; /* 버튼을 20px 아래로 이동 */
+}
+
+#list-files-button{
+    margin-top: -20px;
 }

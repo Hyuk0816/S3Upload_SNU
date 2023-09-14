@@ -14,7 +14,7 @@
     <label for="file-input">파일 선택:</label>
     <input type="file" id="file-input" name="file" accept=".csv">
     <div>
-        <button type="submit">파일 업로드</button>
+        <button type="submit">Upload</button>
     </div>
 
 </form>
@@ -35,8 +35,16 @@
     <label for="filename">파일 이름:</label>
     <input type="text" id="filename" name="filename">
     <br>
-    <button type="submit">다운로드</button>
+    <button type="submit">Download</button>
 </form>
+
+<hr>
+<div>
+    <h2>File List</h2>
+</div>
+<button id="list-files-button">Search</button>
+<div id="file-list-container"></div>
+
 <script src="script.js"></script>
 </body>
 </html>

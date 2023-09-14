@@ -70,5 +70,32 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             alert("폴더와 파일 이름을 모두 입력하세요.");
         }
+        function listFiles() {
+            fetch("/api/s3/search")
+                .then(response => response.json())
+                .then(data => {
+                    const fileListContainer = document.getElementById("file-list-container");
+
+                    // 파일 목록 컨테이너 초기화
+                    fileListContainer.innerHTML = "";
+
+                    // 파일 목록 데이터를 컨테이너에 추가
+                    data.forEach(file => {
+                        const fileItem = document.createElement("div");
+                        fileItem.textContent = file.key; // 파일 이름
+                        fileListContainer.appendChild(fileItem);
+                    });
+                })
+                .catch(error => {
+                    console.error("파일 목록을 가져오는 동안 오류 발생:", error);
+                });
+        }
+
+        // 파일 목록 조회 버튼 클릭 시 파일 목록 조회 함수 호출
+        const listFilesButton = document.getElementById("list-files-button");
+        listFilesButton.addEventListener("click", listFiles);
+
+        // 페이지 로드 시 파일 목록 조회를 수행하지 않도록 주석 처리
+        // listFiles();
     });
 });

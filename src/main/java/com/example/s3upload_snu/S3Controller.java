@@ -1,7 +1,7 @@
 package com.example.s3upload_snu;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,12 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/s3")
@@ -60,6 +58,15 @@ public class S3Controller {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
+    }
+
+    @GetMapping("/search")
+    @ResponseBody
+    public List<S3ObjectSummary> listobjects(){
+        String bucketName = "down-snu";
+        ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(bucketName);
+        ListObjectsV2Result result = amazonS3.listObjectsV2(request);
+        return result.getObjectSummaries(); //s3 객체 목록 보여줌 
     }
 }
 
