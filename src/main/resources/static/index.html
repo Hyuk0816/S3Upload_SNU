@@ -42,8 +42,17 @@
 <div>
     <h2>File List</h2>
 </div>
-<button id="list-files-button">Search</button>
+<!-- 수정된 부분: 드롭다운 형식으로 폴더 선택 -->
+<label for="folder-select">폴더 선택:</label>
+<select id="folder-select">
+    <option value="H2">H2</option>
+    <option value="H4">H4</option>
+    <option value="H5">H5</option>
+</select>
+<button id="list-files-button">search</button>
+
 <div id="file-list-container"></div>
+
 
 <script src="script.js"></script>
 </body>

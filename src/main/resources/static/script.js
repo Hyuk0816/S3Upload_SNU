@@ -71,7 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("폴더와 파일 이름을 모두 입력하세요.");
         }
         function listFiles() {
-            fetch("/api/s3/search")
+            const selectedFolder = document.getElementById("folder-select").value;
+            fetch(`/api/s3/search/${selectedFolder}`)
                 .then(response => response.json())
                 .then(data => {
                     const fileListContainer = document.getElementById("file-list-container");
@@ -91,9 +92,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
 
-        // 파일 목록 조회 버튼 클릭 시 파일 목록 조회 함수 호출
+        // "조회" 버튼 클릭 시 파일 목록 조회 함수 호출
         const listFilesButton = document.getElementById("list-files-button");
         listFilesButton.addEventListener("click", listFiles);
+
 
         // 페이지 로드 시 파일 목록 조회를 수행하지 않도록 주석 처리
         // listFiles();

@@ -60,11 +60,12 @@ public class S3Controller {
                 .body(resource);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search/{folder}")
     @ResponseBody
-    public List<S3ObjectSummary> listobjects(){
+    public List<S3ObjectSummary> listobjectsInFolder(@PathVariable String folder){
         String bucketName = "down-snu";
-        ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(bucketName);
+        String prefix = folder + "/";
+        ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(bucketName).withPrefix(prefix);
         ListObjectsV2Result result = amazonS3.listObjectsV2(request);
         return result.getObjectSummaries(); //s3 객체 목록 보여줌 
     }
