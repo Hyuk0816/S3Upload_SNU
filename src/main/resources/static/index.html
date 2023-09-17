@@ -20,6 +20,28 @@
 </form>
 <div id="status"></div>
 
+<hr>
+    <div>
+        <h2>File List</h2>
+    </div>
+<div>
+    <label>File list를 보고 원하는 파일을 입력하여 아래에서 다운로드 하세요!</label>
+
+</div>
+<div>
+    <label>조회가 안되면 다운로드 버튼을 한번 눌러주세요!</label>
+</div>
+
+<label for="folder-select">폴더 선택:</label>
+<select id="folder-select">
+    <option value="H2">H2</option>
+    <option value="H4">H4</option>
+    <option value="H5">H5</option>
+</select>
+<button id="list-files-button">search</button>
+
+<div id="file-list-container"></div>
+
 <!--파일 다운로드-->
 <hr>
 <h2>File Download</h2>
@@ -38,20 +60,7 @@
     <button type="submit">Download</button>
 </form>
 
-<hr>
-<div>
-    <h2>File List</h2>
-</div>
-<!-- 수정된 부분: 드롭다운 형식으로 폴더 선택 -->
-<label for="folder-select">폴더 선택:</label>
-<select id="folder-select">
-    <option value="H2">H2</option>
-    <option value="H4">H4</option>
-    <option value="H5">H5</option>
-</select>
-<button id="list-files-button">search</button>
 
-<div id="file-list-container"></div>
 
 
 <script src="script.js"></script>
