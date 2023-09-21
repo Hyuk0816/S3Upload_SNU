@@ -68,5 +68,9 @@ button:hover {
 }
 
 #list-files-button{
-    margin-top: -20px;
+    margin-top: -30px;
+}
+
+#folder-select{
+    margin-top: 20px;
 }
