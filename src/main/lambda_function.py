@@ -11,7 +11,10 @@ h5 = ['킬링턴머테리얼즈', '소테리아', '다이노즈', '리오', '어
 
 
 def preprocess_data(csv_data):
-    df = pd.read_csv(csv_data, encoding='utf-8-sig')
+    try:
+        df = pd.read_csv(csv_data, encoding='utf-8-sig')
+    except:
+        df = pd.read_csv(csv_data, encoding='EUC-KR')
 
     #raw 데이터 컬럼명에 ''가 삽입되어 있어서 컬럼 호출 불가 COl이라는 정상적인 컬럼명 리스트 추가
 
