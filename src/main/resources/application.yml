@@ -5,10 +5,10 @@ cloud:
       - upload-snu
       - down-snu
     credentials:
-      access-key: ${AWS_ACCESS_KEY}
-      secret-key: ${AWS_SECRET_KEY}
+      access-key: AKIAZ6RPDHXFNB6EKUMZ
+      secret-key: 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
     region:
-      static: ${AWS_REGION}
+      static: ap-northeast-2
 
     stack:
       auto: false
@@ -18,5 +18,7 @@ logging:
       amazonaws:
         util:
           EC2MetadataUtils: error
+
 server:
-  port: 8080
+  port: 8081
+  address: 127.0.0.1
