@@ -2,13 +2,13 @@ cloud:
   aws:
     s3:
       bucket:
-      - upload-snu
-      - down-snu
+      - 
+      -
     credentials:
-      access-key: AKIAZ6RPDHXFNB6EKUMZ
-      secret-key: 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
+      access-key:
+      secret-key: 
     region:
-      static: ap-northeast-2
+      static: 
 
     stack:
       auto: false
