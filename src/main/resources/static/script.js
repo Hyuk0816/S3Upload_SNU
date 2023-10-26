@@ -46,45 +46,58 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // 파일 목록 조회 함수
-    function listFiles() {
-        const selectedFolder = document.getElementById("folder-select").value;
-        fetch(`/api/s3/search/${selectedFolder}`)
-            .then(response => response.json())
-            .then(data => {
-                const fileListContainer = document.getElementById("file-list-container");
+    // 파일 다운로드 양식 처리
+    const downloadForm = document.getElementById("download-form");
 
-                // 파일 목록 컨테이너 초기화
-                fileListContainer.innerHTML = "";
+    downloadForm.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-                // 파일 목록 데이터를 컨테이너에 추가
-                data.forEach(file => {
-                    const fileItem = document.createElement("div");
-                    fileItem.textContent = file.key; // 파일 이름
-                    fileListContainer.appendChild(fileItem);
+        // 선택한 폴더와 파일 이름 가져오기
+        const folderSelect = document.getElementById("folder");
+        const filenameInput = document.getElementById("filename");
 
-                    fileItem.addEventListener("click", function () {
-                        downloadFile(selectedFolder, file.key);
+        const folder = folderSelect.value;
+        const filename = filenameInput.value;
+
+        if (folder && filename) {
+            // 파일 다운로드 링크 생성
+            const downloadLink = document.createElement("a");
+            downloadLink.href = `/api/s3/download/${folder}/${filename}`;
+            downloadLink.download = filename;
+
+            // 링크를 클릭하여 다운로드 시작
+            downloadLink.click();
+        } else {
+            alert("폴더와 파일 이름을 모두 입력하세요.");
+        }
+        function listFiles() {
+            const selectedFolder = document.getElementById("folder-select").value;
+            fetch(`/api/s3/search/${selectedFolder}`)
+                .then(response => response.json())
+                .then(data => {
+                    const fileListContainer = document.getElementById("file-list-container");
+
+                    // 파일 목록 컨테이너 초기화
+                    fileListContainer.innerHTML = "";
+
+                    // 파일 목록 데이터를 컨테이너에 추가
+                    data.forEach(file => {
+                        const fileItem = document.createElement("div");
+                        fileItem.textContent = file.key; // 파일 이름
+                        fileListContainer.appendChild(fileItem);
                     });
+                })
+                .catch(error => {
+                    console.error("파일 목록을 가져오는 동안 오류 발생:", error);
                 });
-            })
-            .catch(error => {
-                console.error("파일 목록을 가져오는 동안 오류 발생:", error);
-            });
-    }
+        }
 
-    // "조회" 버튼 클릭 시 파일 목록 조회 함수 호출
-    const listFilesButton = document.getElementById("list-files-button");
-    listFilesButton.addEventListener("click", listFiles);
+        // "조회" 버튼 클릭 시 파일 목록 조회 함수 호출
+        const listFilesButton = document.getElementById("list-files-button");
+        listFilesButton.addEventListener("click", listFiles);
 
-    // 파일 다운로드 함수
-    function downloadFile(folder, filename) {
-        const downloadLink = document.createElement("a");
-        downloadLink.href = `/api/s3/download/${folder}/${filename}`;
-        downloadLink.download = filename;
-        downloadLink.click();
-    }
 
-    // 페이지 로드 시 파일 목록 조회를 수행
-    listFiles();
+        // 페이지 로드 시 파일 목록 조회를 수행하지 않도록 주석 처리
+        // listFiles();
+    });
 });
