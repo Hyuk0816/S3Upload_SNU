@@ -4,6 +4,8 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +34,23 @@ public class S3Controller {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
             PutObjectRequest request = new PutObjectRequest("upload-snu",file.getOriginalFilename(), file.getInputStream(), metadata);
-            PutObjectResult result = amazonS3.putObject(request);
+            //PutObjectResult result = amazonS3.putObject(request);
             return ResponseEntity.ok("Success");
 
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Fail: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/search/{folder}")
+    @ResponseBody
+    public List<S3ObjectSummary> listobjectsInFolder(@PathVariable String folder){
+        String bucketName = "down-snu";
+        String prefix = folder + "/";
+        ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(bucketName).withPrefix(prefix);
+        ListObjectsV2Result result = amazonS3.listObjectsV2(request);
+        return result.getObjectSummaries(); //s3 객체 목록 보여줌
     }
 
     @GetMapping("/download/{folder}/{filename}")
@@ -60,15 +72,6 @@ public class S3Controller {
                 .body(resource);
     }
 
-    @GetMapping("/search/{folder}")
-    @ResponseBody
-    public List<S3ObjectSummary> listobjectsInFolder(@PathVariable String folder){
-        String bucketName = "down-snu";
-        String prefix = folder + "/";
-        ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(bucketName).withPrefix(prefix);
-        ListObjectsV2Result result = amazonS3.listObjectsV2(request);
-        return result.getObjectSummaries(); //s3 객체 목록 보여줌 
-    }
 }
 
 
