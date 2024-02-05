@@ -2,11 +2,11 @@ cloud:
   aws:
     s3:
       bucket:
-      - upload-snu
-      - down-snu
+      - ${uploadBucket} upload-snu
+      - ${downBucket} down-snu
     credentials:
-      access-key: ${AWS_ACCESS_KEY}
-      secret-key: ${AWS_SECRET_KEY}
+      access-key: ${access}
+      secret-key: ${secret}
     region:
       static: ${AWS_REGION}
 
