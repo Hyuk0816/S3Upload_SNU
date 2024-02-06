@@ -1,4 +1,4 @@
-package com.example.s3upload_snu;
+package com.example.s3upload_snu.s3Function.controller;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;

@@ -1,14 +1,38 @@
+spring:
+  datasource:
+    username: ${DBNAME}
+    password: ${DBPassword}
+    url: ${DBURL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1MB
+      max-request-size: 1MB
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+security:
+  jwt:
+    header: Authorization
+    secret: ${jwt_secret}
+    token-validity-in-seconds: 604800
+
 cloud:
   aws:
     s3:
       bucket:
-      - ${uploadBucket} upload-snu
-      - ${downBucket} down-snu
+      - ${uploadBucket}
+      - ${downBucket}
     credentials:
       access-key: ${access}
       secret-key: ${secret}
     region:
-      static: ${AWS_REGION}
+      static: ${region}
 
     stack:
       auto: false
