@@ -5,6 +5,12 @@ spring:
     url: ${DBURL}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  data:
+    redis:
+      host: ${redisHost}
+      port: ${redisPort}
+      password: ${redisPwd}
+
   servlet:
     multipart:
       enabled: true

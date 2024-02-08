@@ -60,6 +60,7 @@ public class S3Controller {
                 .body(resource);
     }
 
+
     @GetMapping("/search/{folder}")
     @ResponseBody
     public List<S3ObjectSummary> listobjectsInFolder(@PathVariable String folder){
@@ -70,5 +71,4 @@ public class S3Controller {
         return result.getObjectSummaries(); //s3 객체 목록 보여줌 
     }
 }
-
 
