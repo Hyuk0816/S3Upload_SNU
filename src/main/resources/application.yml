@@ -4,13 +4,11 @@ spring:
     password: ${DBPassword}
     url: ${DBURL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   data:
     redis:
       host: ${redisHost}
       port: ${redisPort}
       password: ${redisPwd}
-
   servlet:
     multipart:
       enabled: true
@@ -21,6 +19,18 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+springdoc:
+  packages-to-scan: com.example.s3upload_snu
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /index.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter:
 
 security:
   jwt:
@@ -39,7 +49,6 @@ cloud:
       secret-key: ${secret}
     region:
       static: ${region}
-
     stack:
       auto: false
 logging:
