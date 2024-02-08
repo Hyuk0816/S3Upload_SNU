@@ -1,15 +1,54 @@
+spring:
+  datasource:
+    username: ${DBNAME}
+    password: ${DBPassword}
+    url: ${DBURL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: ${redisHost}
+      port: ${redisPort}
+      password: ${redisPwd}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1MB
+      max-request-size: 1MB
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+springdoc:
+  packages-to-scan: com.example.s3upload_snu
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /index.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter:
+
+security:
+  jwt:
+    header: Authorization
+    secret: ${jwt_secret}
+    token-validity-in-seconds: 604800
+
 cloud:
   aws:
     s3:
       bucket:
-      - 
-      -
+      - ${uploadBucket}
+      - ${downBucket}
     credentials:
-      access-key:
-      secret-key: 
+      access-key: ${access}
+      secret-key: ${secret}
     region:
-      static: 
-
+      static: ${region}
     stack:
       auto: false
 logging:
@@ -18,7 +57,5 @@ logging:
       amazonaws:
         util:
           EC2MetadataUtils: error
-
 server:
-  port: 8081
-  address: 127.0.0.1
+  port: 8080
