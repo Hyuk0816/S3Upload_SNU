@@ -1,8 +1,11 @@
 package com.example.s3upload_snu.s3Function.service;
 
+import antlr.Token;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import com.example.s3upload_snu.config.jwt.TokenProvider;
 import com.example.s3upload_snu.exception.FileUploadFailedException;
+import com.example.s3upload_snu.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,29 +38,36 @@ public class S3FileService {
     @Value("${downBucket}")
     private String downBucket;
 
+    private final TokenProvider tokenProvider;
+    private final UserRepository userRepository;
+
     /**
      *
      * @param file
+     * @param  token
      * @return
      * @throws FileUploadFailedException
      * @apiNote 파일 업로드 api
      */
-    public ResponseEntity<?> uploadFile(MultipartFile file) throws FileUploadFailedException {
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(file.getContentType());
-        objectMetadata.setContentLength(file.getSize());
+    public ResponseEntity<?> uploadFile(MultipartFile file, String token) throws FileUploadFailedException {
+        String email = tokenProvider.getEmailBytoken(token);
+        if(userRepository.findByEmail(email)!=null){
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentType(file.getContentType());
+            objectMetadata.setContentLength(file.getSize());
 
-        try(InputStream inputStream = file.getInputStream()){
-            amazonS3Client.putObject(new EncryptedPutObjectRequest(uploadBucket, file.getOriginalFilename(), inputStream,objectMetadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            try(InputStream inputStream = file.getInputStream()){
+                amazonS3Client.putObject(new EncryptedPutObjectRequest(uploadBucket, file.getOriginalFilename(), inputStream,objectMetadata)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
 
-        }catch (Exception e){
-            log.error("Amazon S3 파일 업로드 실패: {}", e.getMessage(), e);
-            throw new FileUploadFailedException("파일 업로드에 실패했습니다");
+            }catch (Exception e){
+                log.error("Amazon S3 파일 업로드 실패: {}", e.getMessage(), e);
+                throw new FileUploadFailedException("파일 업로드에 실패했습니다");
+            }
+            return ResponseEntity.ok("파일 업로드에 성공했습니다");
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("유저를 찾을 수 없습니다");
         }
-
-        return ResponseEntity.ok("파일 업로드에 성공했습니다");
-
     }
 
     /**
@@ -69,28 +79,40 @@ public class S3FileService {
      * @apiNote 파일 다운로드 api
      */
 
-    public ResponseEntity<InputStreamResource> downloadFile(String folder, String filename) throws IOException {
-        String key = folder + "/" + filename; // s3 폴더와 오브젝트를 동적으로 설정하여 필요한 거점별 데이터 다운
+    public ResponseEntity<?> downloadFile(String folder, String filename, String token) throws IOException {
 
-        S3Object s3Object = amazonS3Client.getObject(downBucket, key);
-        InputStream inputStream = s3Object.getObjectContent();
+        String email = tokenProvider.getEmailBytoken(token);
+        if(userRepository.findByEmail(email)!=null){
+            String key = folder + "/" + filename; // s3 폴더와 오브젝트를 동적으로 설정하여 필요한 거점별 데이터 다운
 
-        InputStreamResource resource = new InputStreamResource(inputStream);
+            S3Object s3Object = amazonS3Client.getObject(downBucket, key);
+            InputStream inputStream = s3Object.getObjectContent();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+            InputStreamResource resource = new InputStreamResource(inputStream);
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(resource);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("유저를 찾을 수 없습니다");
+        }
+
     }
 
-    public List<S3ObjectSummary> objectsInBucket(String folder){
-        String prefix = folder + "/";
-        ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(downBucket).withPrefix(prefix);
-        ListObjectsV2Result result = amazonS3Client.listObjectsV2(request);
-        return result.getObjectSummaries(); //s3 객체 목록 보여줌
+    public ResponseEntity<?> objectsInBucket(String folder,String token){
+        String email = tokenProvider.getEmailBytoken(token);
+        if(userRepository.findByEmail(email)!=null){
+            String prefix = folder + "/";
+            ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(downBucket).withPrefix(prefix);
+            ListObjectsV2Result result = amazonS3Client.listObjectsV2(request);
+            return ResponseEntity.ok(result.getObjectSummaries());
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("유저가 없습니다");
+        }
     }
 
 

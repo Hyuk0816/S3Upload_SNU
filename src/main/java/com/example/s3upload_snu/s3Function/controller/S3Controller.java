@@ -33,21 +33,24 @@ public class S3Controller {
     private final S3FileService fileService;
     @Operation(summary = "파일 업로드")
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws FileUploadFailedException {
-        return fileService.uploadFile(file);
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
+                                        @RequestHeader("access_token")String token) throws FileUploadFailedException {
+        return fileService.uploadFile(file, token);
     }
 
     @Operation(summary = "파일 다운로드")
     @GetMapping("/download/{folder}/{filename}")
-    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable String folder, @PathVariable String filename) throws IOException {
-        return fileService.downloadFile(folder, filename);
+    public ResponseEntity<?> downloadFile(@PathVariable String folder, @PathVariable String filename,
+                                          @RequestHeader("access_token") String token) throws IOException {
+        return fileService.downloadFile(folder, filename, token);
     }
 
     @Operation(summary = "버킷 파일 조회")
     @GetMapping("/search/{folder}")
     @ResponseBody
-    public List<S3ObjectSummary> objectsInBucket(@PathVariable String folder){
-        return fileService.objectsInBucket(folder);
+    public ResponseEntity<?> objectsInBucket(@PathVariable String folder,
+                                             @RequestHeader("access_token")String token){
+        return fileService.objectsInBucket(folder,token);
     }
 }
 
