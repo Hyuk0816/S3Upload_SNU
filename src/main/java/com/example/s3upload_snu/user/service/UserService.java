@@ -82,7 +82,7 @@ public class UserService {
             Map<String, String> response = new HashMap<>();
             response.put("message", "아이디 또는 패스워드가 틀렸습니다");
             response.put("http_status", HttpStatus.NOT_ACCEPTABLE.toString());
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
         } catch (UsernameNotFoundException e) {
             e.printStackTrace();
             Map<String, String> response = new HashMap<>();
