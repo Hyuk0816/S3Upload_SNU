@@ -33,7 +33,7 @@ public class S3Controller {
     private final S3FileService fileService;
     @Operation(summary = "파일 업로드")
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<?> uploadFile(MultipartFile file,
                                         @RequestHeader("access_token")String token) throws FileUploadFailedException {
         return fileService.uploadFile(file, token);
     }
